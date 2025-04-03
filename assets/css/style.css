@@ -1,0 +1,162 @@
+/* log in - register */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+a{
+    text-decoration: none;
+}
+
+.signInBody, .signUpBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #F9FAFB;
+}
+
+.signInContainer,.signUpContainer {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 32px;
+    width: 448px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.input {
+    width: 100%;
+    height: 42px;
+    border-radius: 6px;
+    border: 1px solid #D1D5DB;
+    padding: 10px;
+    font-size: 16px;
+}
+    
+.btn {
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    background-color: #2563EB;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #1e4fc3;
+}
+
+.switch-auth {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.switch-auth a {
+    text-decoration: none;
+    color: #2563EB;
+}
+
+/* home */
+.header{
+    background-color: #1F2937;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    height: 52px;
+}
+.navbar_left{
+    width: 240px;
+    height: 28px;
+    font-weight: 700;
+    font-size: 23.9px;
+    line-height: 28px;
+}
+.navbar_right{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+.right{
+    color: white;
+    font-weight: 400;
+    width: 100px;
+    height: 24px;
+    font-size: 18.6px;
+    line-height: 24px;
+}
+.big_img{
+    width: 100%;
+    height: 745.9px;
+}
+.on_img{
+    position: relative;
+    color: white;
+}
+.text_on_img{
+    top: 0px;
+    position: absolute;
+    left: 500px;
+    width: 100%;
+    top: 240px;
+    text-align: center;
+}
+.big_text_on_img{
+    width: 530px;
+    height: 48px;
+    font-weight: 700;
+    font-size: 50.1px;
+    line-height: 48px;
+    text-align: center;
+
+}
+.small_text_on_img{
+    width: 579px;
+    height: 32px;
+    font-weight: 400;
+    font-size: 29.4px;
+    text-align: center;
+    line-height: 32px;
+}
+.on_img_button{
+    width: 194px;
+    height: 44px;
+    top: 120px;
+    left: 191.23px;
+    border-radius: 8px;
+    background-color: #2563EB;
+    color: white;
+    font-weight: 600;
+    font-size: 19.8px;
+    line-height: 28px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    
+}

@@ -9,11 +9,11 @@
       rel="icon"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/logIn_register_index.css" />
   </head>
   <body>
     <div class="header">
-      <div class="navbar_left">GYM MANAGEMENT</div>
+      <a href="./index.html" class="navbar_left">GYM MANAGEMENT</a>
       <div class="navbar_right">
         <a class="right" href="./index.html">Trang chủ</a>
         <a class="right" href="./pages/booking/schedule.html">Lịch tập</a>
@@ -33,47 +33,63 @@
       </div>
       <div class="under_img">
         <div class="class_head">Các lớp học phổ biến</div>
-        <div class="classGym">
-          <img src="./public/img/gym.png" alt="" />
-          <div class="name">Gym</div>
-          <div class="des">Tập luyện với các thiết bị hiện đại</div>
-          <button>Đặt lịch</button>
-        </div>
-        <div class="classYoga">
-          <img src="./public/img/yoga.png" alt="" />
-          <div class="name">Yoga</div>
-          <div class="des">Thư giãn và cân bằng tâm trí</div>
-          <button>Đặt lịch</button>
-        </div>
-        <div class="classZumba">
-          <img src="./public/img/zumba.png" alt="" />
-          <div class="name">Zumba</div>
-          <div class="des">Đốt cháy calories với những điệu nhảy sôi động</div>
-          <button>Đặt lịch</button>
+        <br />
+        <div class="classes">
+          <div class="classGym">
+            <img class="under_images" src="./public/img/gym.png" alt="" />
+            <div class="under-texts">
+              <div class="name">Gym</div>
+              <div class="des">Tập luyện với các thiết bị hiện đại</div>
+              <button class="classes_btn">Đặt lịch</button>
+            </div>
+          </div>
+          <div class="classYoga">
+            <img class="under_images" src="./public/img/yoga.png" alt="" />
+            <div class="under-texts">
+              <div class="name">Yoga</div>
+              <div class="des">Thư giãn và cân bằng tâm trí</div>
+              <button class="classes_btn">Đặt lịch</button>
+            </div>
+          </div>
+          <div class="classZumba">
+            <img class="under_images" src="./public/img/zumba.png" alt="" />
+            <div class="under-texts">
+              <div class="name">Zumba</div>
+              <div class="des">
+                Đốt cháy calories với những điệu nhảy sôi động
+              </div>
+              <button class="classes_btn">Đặt lịch</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="footer">
-      <div class="about">
-        <h4>Về chúng tôi</h4>
-        <p>
-          Gym Management - Nơi bạn bắt đầu hành trình fitness của mình với các
-          trang thiết bị hiện đại và đội ngũ huấn luyện viên chuyên nghiệp.
-        </p>
-      </div>
-      <div class="contact">
-        <h4>Liên hệ</h4>
-        <p>Email: contact@gym.com</p>
-        <p>Phone: (123) 456-7890</p>
-        <p>Địa chỉ: 123 Đường ABC, Quận XYZ</p>
-      </div>
-      <div class="follow">
-        <h4>Theo dõi chúng tôi</h4>
-        <a href="">Facebook</a>
-        <a href="">Instagram</a>
-        <a href="">Twitter</a>
+      <div class="footer_more">
+        <div class="about">
+          <h4>Về chúng tôi</h4>
+          <p class="foot_texts">
+            Gym Management - Nơi bạn bắt đầu hành trình fitness của mình với các
+            trang thiết bị hiện đại và đội ngũ huấn luyện viên chuyên nghiệp.
+          </p>
+        </div>
+        <div class="contact">
+          <h4>Liên hệ</h4>
+          <p class="foot_texts">Email: contact@gym.com</p>
+          <p class="foot_texts">Phone: (123) 456-7890</p>
+          <p class="foot_texts">Địa chỉ: 123 Đường ABC, Quận XYZ</p>
+        </div>
+        <div class="follow">
+          <h4>Theo dõi chúng tôi</h4>
+          <div class="contact_links">
+            <a class="foot_texts" href="">Facebook</a>
+            <a class="foot_texts" href="">Instagram</a>
+            <a class="foot_texts" href="">Twitter</a>
+          </div>
+        </div>
       </div>
       <div class="bottom">&#169; 2024 Gym Management. All rights reserved.</div>
     </div>
+    <script src="./assets/js/main.js"></script>
   </body>
 </html>

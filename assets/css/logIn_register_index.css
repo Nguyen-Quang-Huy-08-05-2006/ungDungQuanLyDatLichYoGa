@@ -295,8 +295,10 @@ h4 {
 button:hover {
   opacity: 0.6;
   transition: all 0.3s linear;
+  cursor: pointer;
 }
 a:hover {
   opacity: 0.6;
   transition: all 0.3s linear;
+  cursor: pointer;
 }

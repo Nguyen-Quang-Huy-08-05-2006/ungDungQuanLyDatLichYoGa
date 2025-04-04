@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans", sans-serif;
+}
+a {
+  text-decoration: none;
+  color: white;
+  width: 86px;
+  height: 24px;
+  font-weight: 400;
+  font-size: 18.1px;
+  line-height: 24px;
+}
+.navbar {
+  height: 52px;
+  width: 100%;
+  background-color: #1f2937;
+}
+.navbar_contents {
+  width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 115px;
+}
+.name {
+  color: white;
+  width: 168px;
+  height: 28px;
+  font-weight: 700;
+  font-size: 16.7px;
+  line-height: 28px;
+  margin-top: 11.5px;
+  margin-left: 16px;
+}
+.navLinks {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+}
+.body {
+  background-color: #f9fafb;
+  width: 100%;
+  height: 100vh;
+}
+.body_container {
+  width: 1280px;
+  height: 193px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.upper {
+  width: 1248px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  margin-left: 130px;
+}
+.bigOne {
+  width: 240px;
+  height: 32px;
+  font-weight: 700;
+  font-size: 30.6px;
+  line-height: 32px;
+}
+.new_schedule {
+  background-color: #3b82f6;
+  border-radius: 6px;
+  width: 147.22px;
+  height: 40px;
+  border: none;
+  color: white;
+  font-weight: 500px;
+  font-size: 19.6px;
+  line-height: 24px;
+}
+table {
+  background-color: rgba(255, 255, 255, 1);
+  width: 1248px;
+  height: 49px;
+  border-radius: 8px;
+  margin-left: 130px;
+  justify-content: space-between;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+button:hover {
+  opacity: 0.6;
+  transition: all 0.3s linear;
+  cursor: pointer;
+}
+a:hover {
+  opacity: 0.6;
+  transition: all 0.3s linear;
+  cursor: pointer;
+}

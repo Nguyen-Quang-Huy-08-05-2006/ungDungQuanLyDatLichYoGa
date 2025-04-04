@@ -1,9 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (currentUser) {
-    if (currentUser.role === "admin" && window.location.pathname !== "/pages/admin/dashboard.html") {
+    if (
+      currentUser.role === "admin" &&
+      window.location.pathname !== "/pages/admin/dashboard.html"
+    ) {
       window.location.href = "../admin/dashboard.html";
-    } else if (currentUser.role === "user" && window.location.pathname !== "/pages/booking/schedule.html") {
+    } else if (
+      currentUser.role === "user" &&
+      window.location.pathname !== "/pages/booking/schedule.html"
+    ) {
       window.location.href = "../booking/schedule.html";
     }
   }
@@ -40,8 +46,10 @@ function registerUser(event) {
     passwordInput = document.getElementById("password"),
     repeatPasswordInput = document.getElementById("repeatPassword");
 
-  [nameInput, emailInput, passwordInput, repeatPasswordInput].forEach(clearError);
-  
+  [nameInput, emailInput, passwordInput, repeatPasswordInput].forEach(
+    clearError
+  );
+
   let isValid = true;
 
   if (nameInput.value.trim() === "") {
@@ -89,7 +97,6 @@ function registerUser(event) {
   users.push(newUser);
   localStorage.setItem("users", JSON.stringify(users));
 
-  alert("Đăng ký thành công!");
   window.location.href = "./logIn.html";
 }
 
@@ -126,17 +133,16 @@ function loginUser(event) {
       createdAt: new Date().toISOString(),
     };
     localStorage.setItem("currentUser", JSON.stringify(adminUser));
-    alert("Đăng nhập admin thành công!");
     window.location.href = "../admin/dashboard.html";
     return;
   }
 
   let user = users.find(
-    (u) => u.email === emailInput.value.trim() && u.password === passwordInput.value
+    (u) =>
+      u.email === emailInput.value.trim() && u.password === passwordInput.value
   );
 
   if (user) {
-    alert("Đăng nhập thành công!");
     localStorage.setItem("currentUser", JSON.stringify(user));
     window.location.href = "../../index.html";
   } else {

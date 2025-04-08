@@ -87,6 +87,12 @@ table {
   justify-content: space-between;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+th {
+  background-color: hsl(220deg 14.29% 95.88%);
+}
+td {
+  border-bottom: 1px solid rgb(224, 219, 219);
+}
 button:hover {
   opacity: 0.6;
   transition: all 0.3s linear;
@@ -160,22 +166,26 @@ a:hover {
 }
 
 #saveBtn {
-  background-color: #28a745;
+  background-color: #3b82f6;
+  border-radius: 6px;
+  width: 90px;
+  height: 35px;
+  border: none;
   color: white;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 255px;
 }
 
 #cancelBtn {
   background-color: #dc3545;
+  border-radius: 6px;
+  width: 90px;
+  height: 35px;
+  border: none;
   color: white;
+  font-size: 18px;
 }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+td {
+  text-align: center;
 }

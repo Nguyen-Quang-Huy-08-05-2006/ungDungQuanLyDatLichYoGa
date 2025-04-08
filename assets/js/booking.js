@@ -1,18 +1,16 @@
 const classSelect = document.getElementById("classSelect");
 const dateInput = document.getElementById("dateInput");
 const timeSelect = document.getElementById("timeSelect");
-const nameInput = document.getElementById("nameInput");
-const emailInput = document.getElementById("emailInput");
 const saveBtn = document.getElementById("saveBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 const scheduleTable = document.querySelector("table");
 const newScheduleBtn = document.querySelector(".new_schedule");
 const modal = document.querySelector(".modal");
-const modalContent = document.querySelector(".modal-content");
 
 let scheduleList = JSON.parse(localStorage.getItem("scheduleList")) || [];
 let isEdit = false;
 let editIndex = -1;
+
 function renderTable() {
   document
     .querySelectorAll("table tr:not(:first-child)")
@@ -21,13 +19,13 @@ function renderTable() {
   scheduleList.forEach((item, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${item.class}</td>
+      <td>${item.classId}</td>
       <td>${item.date}</td>
       <td>${item.time}</td>
       <td>${item.name}</td>
       <td>${item.email}</td>
       <td>
-        <a href="#" class="editBtn" data-index="${index}">Sửa</a> |
+        <a href="#" class="editBtn" data-index="${index}" style="color:blue">Sửa</a> |
         <a href="#" class="deleteBtn" data-index="${index}" style="color:red">Xoá</a>
       </td>
     `;
@@ -41,8 +39,6 @@ function clearForm() {
   classSelect.value = "";
   dateInput.value = "";
   timeSelect.value = "";
-  nameInput.value = "";
-  emailInput.value = "";
 }
 
 function openModal() {
@@ -56,32 +52,82 @@ function closeModal() {
   editIndex = -1;
 }
 
+function showWarning(message) {
+  const warning = document.getElementById("warningMsg");
+  warning.innerText = message;
+  warning.style.display = "block";
+}
+
+function hideWarning() {
+  const warning = document.getElementById("warningMsg");
+  warning.innerText = "";
+  warning.style.display = "none";
+}
+
 function validate(schedule, ignoreIndex = -1) {
+  hideWarning();
+
   if (
-    !schedule.class ||
+    !schedule.classId ||
     !schedule.date ||
     !schedule.time ||
     !schedule.name ||
     !schedule.email
   ) {
-    alert("Vui lòng điền đầy đủ thông tin.");
+    showWarning("Vui lòng điền đầy đủ thông tin.");
     return false;
   }
 
   const isDuplicate = scheduleList.some(
     (item, i) =>
       i !== ignoreIndex &&
-      item.class === schedule.class &&
+      item.classId === schedule.classId &&
       item.date === schedule.date &&
       item.time === schedule.time
   );
 
   if (isDuplicate) {
-    alert("Lịch đã tồn tại.");
+    showWarning("Lịch đã tồn tại.");
     return false;
   }
 
   return true;
+}
+let deleteIndex = -1;
+const confirmModal = document.getElementById("confirmModal");
+const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+
+function openConfirmModal(index) {
+  deleteIndex = index;
+  confirmModal.style.display = "block";
+}
+
+function closeConfirmModal() {
+  deleteIndex = -1;
+  confirmModal.style.display = "none";
+}
+
+confirmDeleteBtn.onclick = function () {
+  if (deleteIndex !== -1) {
+    scheduleList.splice(deleteIndex, 1);
+    localStorage.setItem("scheduleList", JSON.stringify(scheduleList));
+    renderTable();
+  }
+  closeConfirmModal();
+};
+
+cancelDeleteBtn.onclick = closeConfirmModal;
+
+confirmModal.onclick = function (e) {
+  if (e.target === confirmModal) {
+    closeConfirmModal();
+  }
+};
+
+function openModal() {
+  hideWarning();
+  modal.style.display = "block";
 }
 
 function attachEventListeners() {
@@ -89,13 +135,9 @@ function attachEventListeners() {
     btn.onclick = function () {
       const index = this.dataset.index;
       const item = scheduleList[index];
-
-      classSelect.value = item.class;
+      classSelect.value = item.classId;
       dateInput.value = item.date;
       timeSelect.value = item.time;
-      nameInput.value = item.name;
-      emailInput.value = item.email;
-
       isEdit = true;
       editIndex = index;
       openModal();
@@ -105,22 +147,24 @@ function attachEventListeners() {
   document.querySelectorAll(".deleteBtn").forEach((btn) => {
     btn.onclick = function () {
       const index = this.dataset.index;
-      if (confirm("Bạn có chắc chắn muốn xoá lịch này?")) {
-        scheduleList.splice(index, 1);
-        localStorage.setItem("scheduleList", JSON.stringify(scheduleList));
-        renderTable();
-      }
+      openConfirmModal(index);
     };
   });
 }
 
 saveBtn.onclick = function () {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
   const newSchedule = {
-    class: classSelect.value,
+    id: "SCH_" + Math.random().toString(36).substr(2, 9),
+    userId: currentUser.id || currentUser.email || "guest",
+    classId: classSelect.value,
     date: dateInput.value,
     time: timeSelect.value,
-    name: nameInput.value,
-    email: emailInput.value,
+    status: "pending",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    name: currentUser.fullname,
+    email: currentUser.email,
   };
 
   if (!validate(newSchedule, isEdit ? editIndex : -1)) return;
@@ -134,6 +178,7 @@ saveBtn.onclick = function () {
   localStorage.setItem("scheduleList", JSON.stringify(scheduleList));
   renderTable();
   closeModal();
+  hideWarning();
 };
 
 cancelBtn.onclick = closeModal;

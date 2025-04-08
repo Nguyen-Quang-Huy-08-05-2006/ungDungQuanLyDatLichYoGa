@@ -58,15 +58,23 @@
           <option value="07:00 - 09:00">07:00 - 09:00</option>
           <option value="09:00 - 11:00">09:00 - 11:00</option>
         </select>
-        <label>Họ tên:</label>
-        <input type="text" id="nameInput" />
-        <label>Email:</label>
-        <input type="email" id="emailInput" />
         <button id="saveBtn">Lưu</button>
         <button id="cancelBtn">Hủy</button>
+        <p
+          id="warningMsg"
+          style="color: red; display: none; margin-top: 10px"
+        ></p>
       </div>
     </div>
-
+    <div id="confirmModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <p>Bạn có chắc chắn muốn xoá lịch này?</p>
+        <div class="modal-actions">
+          <button id="confirmDeleteBtn">Xoá</button>
+          <button id="cancelDeleteBtn">Hủy</button>
+        </div>
+      </div>
+    </div>
     <script src="../../assets/js/booking.js"></script>
   </body>
 </html>

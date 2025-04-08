@@ -39,5 +39,34 @@
         </table>
       </div>
     </div>
+    <div class="modal" style="display: none">
+      <div class="modal-content">
+        <label>Lớp học:</label>
+        <select id="classSelect">
+          <option value="">Chọn lớp học</option>
+          <option value="Gym">Gym</option>
+          <option value="Yoga">Yoga</option>
+          <option value="Zumba">Zumba</option>
+        </select>
+
+        <label>Ngày tập:</label>
+        <input type="date" id="dateInput" />
+
+        <label>Khung giờ:</label>
+        <select id="timeSelect">
+          <option value="">Chọn khung giờ</option>
+          <option value="07:00 - 09:00">07:00 - 09:00</option>
+          <option value="09:00 - 11:00">09:00 - 11:00</option>
+        </select>
+        <label>Họ tên:</label>
+        <input type="text" id="nameInput" />
+        <label>Email:</label>
+        <input type="email" id="emailInput" />
+        <button id="saveBtn">Lưu</button>
+        <button id="cancelBtn">Hủy</button>
+      </div>
+    </div>
+
+    <script src="../../assets/js/booking.js"></script>
   </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý lớp học</title>
+    <link rel="stylesheet" href="../../assets/css/admin.css" />
+    <link
+      href="../../public/favicon/home_booking.ico"
+      rel="icon"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <p class="logo">Admin Dashboard</p>
+        <nav class="navbar">
+          <a class="nav-link" href="./dashboard.html">Quản lý lịch</a>
+          <a class="nav-link" href="./serviceDashboard.html">Quản lý dịch vụ</a>
+          <a class="nav-link" href="../../index.html">Trang chủ</a>
+          <a class="nav-link logout" href="#" onclick="handleLogout()"
+            >Đăng xuất</a
+          >
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <h1>Quản lý lớp học</h1>
+        <button class="btn-add-class" onclick="openAddClassModal()">
+          + Thêm lớp học
+        </button>
+
+        <div class="class-list" id="classList"></div>
+      </main>
+    </div>
+
+    <!-- Modal thêm/sửa lớp học -->
+    <div class="modal" id="classModal">
+      <div class="modal-content">
+        <h2 id="modalTitle">Thêm lớp học</h2>
+        <label for="className">Tên lớp:</label>
+        <input type="text" id="className" />
+        <label for="classDescription">Mô tả:</label>
+        <textarea id="classDescription"></textarea>
+        <label for="classImage">URL ảnh:</label>
+        <input type="text" id="classImage" />
+        <div class="modal-actions">
+          <button id="saveClassBtn">Lưu</button>
+          <button onclick="closeClassModal()">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

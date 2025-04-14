@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý lịch tập</title>
+    <link rel="stylesheet" href="../../assets/css/admin.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="../../public/favicon/home_booking.ico"
+      rel="icon"
+      type="image/x-icon"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <p class="logo">Admin Dashboard</p>
+        <nav class="navbar">
+          <a class="nav-link active" href="./dashboard.html">Quản lý lịch</a>
+          <a class="nav-link" href="./serviceDashboard.html">Quản lý dịch vụ</a>
+          <a class="nav-link" href="../../index.html">Trang chủ</a>
+          <a class="nav-link logout" href=" " onclick="handleLogout()">
+            Đăng xuất
+          </a>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <h1 class="title">Thống kê lịch tập</h1>
+
+        <div class="stats-cards">
+          <div class="card">
+            <p class="card-title">Tổng số lịch Gym</p>
+            <p class="card-value gym" id="gymCount">0</p>
+          </div>
+          <div class="card">
+            <p class="card-title">Tổng số lịch Yoga</p>
+            <p class="card-value yoga" id="yogaCount">0</p>
+          </div>
+          <div class="card">
+            <p class="card-title">Tổng số lịch Zumba</p>
+            <p class="card-value zumba" id="zumbaCount">0</p>
+          </div>
+        </div>
+
+        <div class="filter-form">
+          <h2>Bộ lọc</h2>
+          <div class="filter-controls">
+            <label>Lớp học</label>
+            <select id="filterClass">
+              <option value="all">Tất cả</option>
+              <option value="Gym">Gym</option>
+              <option value="Yoga">Yoga</option>
+              <option value="Zumba">Zumba</option>
+            </select>
+            <label>Email</label>
+            <input type="email" id="filterEmail" placeholder="Tìm theo email" />
+            <label>Ngày</label>
+            <input type="date" id="filterDate" />
+            <button id="filterBtn">Lọc</button>
+          </div>
+        </div>
+
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Lớp học</th>
+              <th>Ngày tập</th>
+              <th>Khung giờ</th>
+              <th>Họ tên</th>
+              <th>Email</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </main>
+    </div>
+    <script src="../../assets/js/admin.js"></script>
+    <div class="modal" style="display: none">
+      <div class="modal-content">
+        <label>Lớp học:</label>
+        <select id="classSelect">
+          <option value="">Chọn lớp học</option>
+          <option value="Gym">Gym</option>
+          <option value="Yoga">Yoga</option>
+          <option value="Zumba">Zumba</option>
+        </select>
+        <label>Ngày tập:</label>
+        <input type="date" id="dateInput" />
+        <label>Khung giờ:</label>
+        <select id="timeSelect">
+          <option value="">Chọn khung giờ</option>
+          <option value="07:00 - 09:00">07:00 - 09:00</option>
+          <option value="09:00 - 11:00">09:00 - 11:00</option>
+        </select>
+        <button id="saveBtn">Lưu</button>
+        <button id="cancelBtn">Hủy</button>
+        <p
+          id="warningMsg"
+          style="color: red; display: none; margin-top: 10px"
+        ></p>
+      </div>
+    </div>
+    <div id="confirmModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <p>Bạn có chắc chắn muốn xoá lịch này?</p>
+        <div class="modal-actions">
+          <button id="confirmDeleteBtn">Xoá</button>
+          <button id="cancelDeleteBtn">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

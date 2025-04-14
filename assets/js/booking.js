@@ -1,197 +1,180 @@
-const classSelect = document.getElementById("classSelect");
-const dateInput = document.getElementById("dateInput");
-const timeSelect = document.getElementById("timeSelect");
-const saveBtn = document.getElementById("saveBtn");
-const cancelBtn = document.getElementById("cancelBtn");
-const scheduleTable = document.querySelector("table");
-const newScheduleBtn = document.querySelector(".new_schedule");
-const modal = document.querySelector(".modal");
+document.addEventListener("DOMContentLoaded", () => {
+  // ======================= PHẦN 1: QUẢN LÝ LỊCH HỌC =======================
+  let scheduleList = JSON.parse(localStorage.getItem("scheduleList")) || [];
+  let editIndex = null;
 
-let scheduleList = JSON.parse(localStorage.getItem("scheduleList")) || [];
-let isEdit = false;
-let editIndex = -1;
+  function renderTable(list) {
+    const scheduleBody = document.getElementById("scheduleBody");
+    scheduleBody.innerHTML = "";
 
-function renderTable() {
-  document
-    .querySelectorAll("table tr:not(:first-child)")
-    .forEach((row) => row.remove());
+    list.forEach((item, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.classId}</td>
+        <td>${item.date}</td>
+        <td>${item.time}</td>
+        <td>${item.name}</td>
+        <td>${item.email}</td>
+        <td>
+          <a href="#" class="editBtn" data-index="${index}" style="color:blue">Sửa</a> |
+          <a href="#" class="deleteBtn" data-index="${index}" style="color:red">Xoá</a>
+        </td>
+      `;
+      scheduleBody.appendChild(row);
+    });
 
-  scheduleList.forEach((item, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${item.classId}</td>
-      <td>${item.date}</td>
-      <td>${item.time}</td>
-      <td>${item.name}</td>
-      <td>${item.email}</td>
-      <td>
-        <a href="#" class="editBtn" data-index="${index}" style="color:blue">Sửa</a> |
-        <a href="#" class="deleteBtn" data-index="${index}" style="color:red">Xoá</a>
-      </td>
-    `;
-    scheduleTable.appendChild(row);
-  });
-
-  attachEventListeners();
-}
-
-function clearForm() {
-  classSelect.value = "";
-  dateInput.value = "";
-  timeSelect.value = "";
-}
-
-function openModal() {
-  modal.style.display = "block";
-}
-
-function closeModal() {
-  modal.style.display = "none";
-  clearForm();
-  isEdit = false;
-  editIndex = -1;
-}
-
-function showWarning(message) {
-  const warning = document.getElementById("warningMsg");
-  warning.innerText = message;
-  warning.style.display = "block";
-}
-
-function hideWarning() {
-  const warning = document.getElementById("warningMsg");
-  warning.innerText = "";
-  warning.style.display = "none";
-}
-
-function validate(schedule, ignoreIndex = -1) {
-  hideWarning();
-
-  if (
-    !schedule.classId ||
-    !schedule.date ||
-    !schedule.time ||
-    !schedule.name ||
-    !schedule.email
-  ) {
-    showWarning("Vui lòng điền đầy đủ thông tin.");
-    return false;
+    attachEventListeners();
   }
 
-  const isDuplicate = scheduleList.some(
-    (item, i) =>
-      i !== ignoreIndex &&
-      item.classId === schedule.classId &&
-      item.date === schedule.date &&
-      item.time === schedule.time
-  );
+  function updateStats() {
+    const gymCount = scheduleList.filter(
+      (item) => item.classId === "Gym"
+    ).length;
+    const yogaCount = scheduleList.filter(
+      (item) => item.classId === "Yoga"
+    ).length;
+    const zumbaCount = scheduleList.filter(
+      (item) => item.classId === "Zumba"
+    ).length;
 
-  if (isDuplicate) {
-    showWarning("Lịch đã tồn tại.");
-    return false;
+    document.getElementById("gymCount").innerText = gymCount;
+    document.getElementById("yogaCount").innerText = yogaCount;
+    document.getElementById("zumbaCount").innerText = zumbaCount;
   }
 
-  return true;
-}
-let deleteIndex = -1;
-const confirmModal = document.getElementById("confirmModal");
-const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+  function openModal() {
+    document.getElementById("editModal").style.display = "block";
+  }
 
-function openConfirmModal(index) {
-  deleteIndex = index;
-  confirmModal.style.display = "block";
-}
+  function closeModal() {
+    document.getElementById("editModal").style.display = "none";
+    document.getElementById("classSelect").value = "";
+    document.getElementById("dateInput").value = "";
+    document.getElementById("timeSelect").value = "";
+    document.getElementById("nameInput").value = "";
+    document.getElementById("emailInput").value = "";
+    editIndex = null;
+  }
 
-function closeConfirmModal() {
-  deleteIndex = -1;
-  confirmModal.style.display = "none";
-}
+  document.getElementById("saveBtn").addEventListener("click", (e) => {
+    e.preventDefault();
 
-confirmDeleteBtn.onclick = function () {
-  if (deleteIndex !== -1) {
-    scheduleList.splice(deleteIndex, 1);
+    const newItem = {
+      classId: document.getElementById("classSelect").value,
+      date: document.getElementById("dateInput").value,
+      time: document.getElementById("timeSelect").value,
+      name: document.getElementById("nameInput").value,
+      email: document.getElementById("emailInput").value,
+    };
+
+    if (editIndex !== null) {
+      scheduleList[editIndex] = newItem;
+    } else {
+      scheduleList.push(newItem);
+    }
+
     localStorage.setItem("scheduleList", JSON.stringify(scheduleList));
-    renderTable();
-  }
-  closeConfirmModal();
-};
-
-cancelDeleteBtn.onclick = closeConfirmModal;
-
-confirmModal.onclick = function (e) {
-  if (e.target === confirmModal) {
-    closeConfirmModal();
-  }
-};
-
-function openModal() {
-  hideWarning();
-  modal.style.display = "block";
-}
-
-function attachEventListeners() {
-  document.querySelectorAll(".editBtn").forEach((btn) => {
-    btn.onclick = function () {
-      const index = this.dataset.index;
-      const item = scheduleList[index];
-      classSelect.value = item.classId;
-      dateInput.value = item.date;
-      timeSelect.value = item.time;
-      isEdit = true;
-      editIndex = index;
-      openModal();
-    };
+    renderTable(scheduleList);
+    updateStats();
+    closeModal();
   });
 
-  document.querySelectorAll(".deleteBtn").forEach((btn) => {
-    btn.onclick = function () {
-      const index = this.dataset.index;
-      openConfirmModal(index);
-    };
+  document.getElementById("addBtn").addEventListener("click", () => {
+    openModal();
   });
-}
 
-saveBtn.onclick = function () {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
-  const newSchedule = {
-    id: "SCH_" + Math.random().toString(36).substr(2, 9),
-    userId: currentUser.id || currentUser.email || "guest",
-    classId: classSelect.value,
-    date: dateInput.value,
-    time: timeSelect.value,
-    status: "pending",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    name: currentUser.fullname,
-    email: currentUser.email,
+  function attachEventListeners() {
+    document.querySelectorAll(".editBtn").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        editIndex = this.dataset.index;
+        const item = scheduleList[editIndex];
+
+        document.getElementById("classSelect").value = item.classId;
+        document.getElementById("dateInput").value = item.date;
+        document.getElementById("timeSelect").value = item.time;
+        document.getElementById("nameInput").value = item.name;
+        document.getElementById("emailInput").value = item.email;
+
+        openModal();
+      });
+    });
+
+    document.querySelectorAll(".deleteBtn").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = this.dataset.index;
+        scheduleList.splice(index, 1);
+        localStorage.setItem("scheduleList", JSON.stringify(scheduleList));
+        renderTable(scheduleList);
+        updateStats();
+      });
+    });
+  }
+
+  // Hiển thị dữ liệu từ Local Storage khi tải trang
+  renderTable(scheduleList);
+  updateStats();
+
+  // ======================= PHẦN 2: QUẢN LÝ LỚP HỌC =======================
+  let classes = JSON.parse(localStorage.getItem("classes")) || [];
+
+  function renderClassCards() {
+    const list = document.getElementById("classList");
+    list.innerHTML = "";
+    classes.forEach((cls, index) => {
+      const card = document.createElement("div");
+      card.className = "class-card";
+      card.innerHTML = `
+        <img src="${cls.image}" alt="${cls.name}">
+        <div class="card-body">
+          <p class="card-title">${cls.name}</p>
+          <p class="card-desc">${cls.description}</p>
+          <div class="card-actions">
+            <button class="btn-edit" onclick="editClass(${index})">Sửa</button>
+            <button class="btn-delete" onclick="deleteClass(${index})">Xoá</button>
+          </div>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  function saveClassesToLocalStorage() {
+    localStorage.setItem("classes", JSON.stringify(classes));
+  }
+
+  document.getElementById("saveClassBtn").onclick = () => {
+    const name = document.getElementById("className").value;
+    const desc = document.getElementById("classDescription").value;
+    const img = document.getElementById("classImage").value;
+
+    if (editIndex !== null) {
+      classes[editIndex] = {
+        ...classes[editIndex],
+        name,
+        description: desc,
+        image: img,
+      };
+    } else {
+      classes.push({ id: Date.now(), name, description: desc, image: img });
+    }
+
+    saveClassesToLocalStorage();
+    renderClassCards();
   };
 
-  if (!validate(newSchedule, isEdit ? editIndex : -1)) return;
+  window.editClass = (index) => {
+    const cls = classes[index];
+    document.getElementById("className").value = cls.name;
+    document.getElementById("classDescription").value = cls.description;
+    document.getElementById("classImage").value = cls.image;
+    editIndex = index;
+  };
 
-  if (isEdit) {
-    scheduleList[editIndex] = newSchedule;
-  } else {
-    scheduleList.push(newSchedule);
-  }
+  window.deleteClass = (index) => {
+    classes.splice(index, 1);
+    saveClassesToLocalStorage();
+    renderClassCards();
+  };
 
-  localStorage.setItem("scheduleList", JSON.stringify(scheduleList));
-  renderTable();
-  closeModal();
-  hideWarning();
-};
-
-cancelBtn.onclick = closeModal;
-
-newScheduleBtn.onclick = () => {
-  clearForm();
-  openModal();
-};
-
-modal.onclick = function (e) {
-  if (e.target === modal) {
-    closeModal();
-  }
-};
-
-window.onload = renderTable;
+  renderClassCards();
+});
